@@ -1,0 +1,27 @@
+.genreList {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #323232;
+  }
+  
+  .genreItem {
+    float: left;
+  }
+  
+  .genreItemMessage {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    cursor: pointer;
+  }
+  
+  .genreItemMessage:hover {
+    background-color: #111;
+  }
+
+  .selectedGenre {
+    border-bottom: 4px solid #F65261;
+  }
