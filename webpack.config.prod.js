@@ -38,6 +38,10 @@ module.exports = {
         use: [MiniCssExtractPlugin.loader, "css-loader"],
       },
       {
+        test: /\.json$/,
+        loader: 'json-loader'
+      },
+      {
         test: /\.(gif|png|jpe?g|svg)$/i,
         use: [
           { loader: "file-loader", options: { name: "img/[name].[ext]" } },

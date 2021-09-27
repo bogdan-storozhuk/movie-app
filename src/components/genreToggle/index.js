@@ -1,28 +1,38 @@
-import React from "react";
+import React, { useState } from "react";
+import PropTypes from "prop-types";
 
 import "./genreToggle.css";
 
 import GenreItem from "../genreItem";
 
-export default class GenreToggle extends React.PureComponent {
-  constructor(props) {
-    super(props);
-    this.state = {
-      index: 0,
-    };
-  }
+const GenreToggle = ({ genreList }) => {
+  const [index, setIndex] = useState(0);
 
-  onSelect = (index) => this.setState({ index });
+  const onSelect = (index) => setIndex(index);
 
-  getSelectedGenre = (id) => id === this.state.index && "selectedGenre";
+  const getSelectedGenre = (id) => id === index && "selectedGenre";
 
-  render() {
-    return (
-      <ul className="genreList">
-        {this.props.genreList.map((genre) => (
-         <GenreItem key={genre.id} genre={genre} onSelect={this.onSelect} getSelectedGenre={this.getSelectedGenre}/>
-        ))}
-      </ul>
-    );
-  }
-}
+  return (
+    <ul className="genreList">
+      {genreList.map((genre) => (
+        <GenreItem
+          key={genre.id}
+          genre={genre}
+          onSelect={onSelect}
+          getSelectedGenre={getSelectedGenre}
+        />
+      ))}
+    </ul>
+  );
+};
+
+GenreToggle.propTypes = {
+  genreList: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number,
+      name: PropTypes.string,
+    })
+  ),
+};
+
+export default GenreToggle;
