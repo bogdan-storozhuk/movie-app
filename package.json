@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/bogdan-storozhuk/movie-app#readme",
   "dependencies": {
+    "prop-types": "^15.7.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2"
   },
@@ -33,6 +34,7 @@
     "html-loader": "^2.1.2",
     "html-webpack-plugin": "^5.3.2",
     "image-webpack-loader": "^7.0.1",
+    "json-loader": "^0.5.7",
     "mini-css-extract-plugin": "^2.3.0",
     "style-loader": "^3.2.1",
     "webpack": "^5.53.0",

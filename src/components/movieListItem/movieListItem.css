@@ -1,0 +1,26 @@
+.MovieListItem-Container {
+  max-height: 486px;
+  max-width: 323px;
+}
+.MovieListItem-Image {
+  max-width: 100%;
+  max-height: 100%;
+}
+.MovieListItem-Details {
+  max-width: 323px;
+  display: flex;
+  justify-content: space-between;
+}
+.MovieListItem-Details-Title {
+  color: white;
+  font-size: 18px;
+}
+.MovieListItem-Details-Date {
+  color: white;
+  padding: 5px 5px;
+  border: 1px solid rgb(255, 255, 255, 0.1);
+}
+.MovieListItem-Genres {
+  color: white;
+  font-size: 12px;
+}

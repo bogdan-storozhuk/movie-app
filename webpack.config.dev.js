@@ -32,6 +32,7 @@ module.exports = {
       },
       {
         test: /\.(gif|png|jpe?g|svg)$/i,
+        include: path.join(__dirname, 'assets/img'),
         use: [{ loader: "file-loader" }],
       },
     ],
