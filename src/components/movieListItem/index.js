@@ -1,6 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 
+import MovieListItemMenu from "../movieListItemMenu";
+
 import { getFormatedGenresDescription } from "../../utils";
 
 import "./movieListItem.css";
@@ -8,8 +10,13 @@ import "./movieListItem.css";
 const MovieListItem = ({ genres, release_date, title, poster_path }) => {
   return (
     <div className="MovieListItem">
-      <div className="MovieListItem-Container">
-        <img src={poster_path} className="MovieListItem-Image" />
+      <div
+        style={{
+          backgroundImage: `url(${poster_path})`,
+        }}
+        className="MovieListItem-Container"
+      >
+        <MovieListItemMenu />
       </div>
       <div className="MovieListItem-Details">
         <span className="MovieListItem-Details-Title">{title}</span>
