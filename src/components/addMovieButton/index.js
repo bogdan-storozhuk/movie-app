@@ -1,9 +1,16 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 import "./addMovieButton.css";
 
-const AddMovieButton = () => (
-  <button className="AddMovieButton">+ ADD MOVIE</button>
+const AddMovieButton = ({ handleAddNewMovie }) => (
+  <button onClick={handleAddNewMovie} className="AddMovieButton">
+    + ADD MOVIE
+  </button>
 );
+
+AddMovieButton.propTypes = {
+  handleAddNewMovie: PropTypes.func,
+};
 
 export default AddMovieButton;

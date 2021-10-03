@@ -1,18 +1,21 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 import GenreToggle from "../genreToggle";
 import DropDown from "../dropdown";
 
-import genreList from "../../assets/constants/genreList";
-import sortByList from "../../assets/constants/sortByList";
-
 import "./controlPanel.css";
 
-const ControlPanel = () => (
+const ControlPanel = ({ handleSelectGenre, genre }) => (
   <div className="ControlPanel">
-    <GenreToggle genreList={genreList} />
-    <DropDown sortByList={sortByList} />
+    <GenreToggle handleSelectGenre={handleSelectGenre} genre={genre} />
+    <DropDown />
   </div>
 );
+
+ControlPanel.propTypes = {
+  handleSelectGenre: PropTypes.func,
+  genre: PropTypes.string,
+};
 
 export default ControlPanel;
