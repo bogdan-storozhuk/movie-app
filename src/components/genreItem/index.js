@@ -3,9 +3,9 @@ import PropTypes from "prop-types";
 
 import "./genreItem.css";
 
-const GenreItem = ({ genre, onSelect, getSelectedGenre }) => (
-  <li onClick={() => onSelect(genre.id)} className="genreItem">
-    <span className={`genreItemMessage ${getSelectedGenre(genre.id)}`}>
+const GenreItem = ({ genre, handleSelectGenre, getSelectedGenre }) => (
+  <li onClick={() => handleSelectGenre(genre.name)} className="genreItem">
+    <span className={`genreItemMessage ${getSelectedGenre(genre.name)}`}>
       {genre.name}
     </span>
   </li>
@@ -14,9 +14,10 @@ const GenreItem = ({ genre, onSelect, getSelectedGenre }) => (
 GenreItem.propTypes = {
   genre: PropTypes.shape({
     id: PropTypes.number,
-    getSelectedGenre: PropTypes.func,
-    onSelect: PropTypes.func,
+    name: PropTypes.string,
   }),
+  handleSelectGenre: PropTypes.func,
+  getSelectedGenre: PropTypes.func,
 };
 
 export default GenreItem;

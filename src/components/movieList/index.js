@@ -5,33 +5,47 @@ import MovieListItem from "../movieListItem";
 
 import "./movieList.css";
 
-const MovieList = ({ movies }) => (
+const MovieList = ({ movies, handleEditMovie, handleDeleteMovie }) => (
   <div className="MovieList">
-    {movies.map((movie) => (
-      <MovieListItem
-        key={movie.id}
-        genres={movie.genres}
-        release_date={movie.release_date}
-        title={movie.title}
-        poster_path={movie.poster_path}
-      />
-    ))}
+    {movies.map((movie) => {
+      const { id, genres, releaseDate, title, posterPath } = movie;
+      return (
+        <MovieListItem
+          key={id}
+          id={id}
+          genres={genres}
+          releaseDate={releaseDate}
+          title={title}
+          posterPath={posterPath}
+          handleEditMovie={handleEditMovie}
+          handleDeleteMovie={handleDeleteMovie}
+        />
+      );
+    })}
   </div>
 );
 
 MovieList.propTypes = {
-  budget: PropTypes.number,
-  genres: PropTypes.arrayOf(PropTypes.string),
-  id: PropTypes.number,
-  overview: PropTypes.string,
-  poster_path: PropTypes.string,
-  release_date: PropTypes.string,
-  revenue: PropTypes.number,
-  runtime: PropTypes.number,
-  tagline: PropTypes.string,
-  title: PropTypes.string,
-  vote_average: PropTypes.number,
-  vote_count: PropTypes.number,
+  movies: PropTypes.arrayOf(
+    PropTypes.shape({
+      budget: PropTypes.number,
+      genres: PropTypes.arrayOf(
+        PropTypes.shape({ id: PropTypes.number, name: PropTypes.string })
+      ),
+      id: PropTypes.number,
+      overview: PropTypes.string,
+      posterPath: PropTypes.string,
+      releaseDate: PropTypes.string,
+      revenue: PropTypes.number,
+      runtime: PropTypes.number,
+      tagline: PropTypes.string,
+      title: PropTypes.string,
+      voteAverage: PropTypes.number,
+      voteCount: PropTypes.number,
+    })
+  ),
+  handleEditMovie: PropTypes.func,
+  handleDeleteMovie: PropTypes.func,
 };
 
 export default MovieList;

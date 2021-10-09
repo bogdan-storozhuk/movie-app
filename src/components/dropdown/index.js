@@ -1,9 +1,10 @@
 import React from "react";
-import PropTypes from "prop-types";
+
+import { sortByList } from "../../assets/constants";
 
 import "./dropdown.css";
 
-const DropDown = ({ sortByList }) => (
+const DropDown = () => (
   <div className="DropDown">
     <label className="DropDown-Label" htmlFor="SortSelect">
       SORT BY
@@ -19,15 +20,5 @@ const DropDown = ({ sortByList }) => (
     </div>
   </div>
 );
-
-DropDown.propTypes = {
-  sortByList: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.number,
-      value: PropTypes.string,
-      message: PropTypes.string,
-    })
-  ),
-};
 
 export default DropDown;

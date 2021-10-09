@@ -1,0 +1,9 @@
+.MovieFormField {
+  display: flex;
+  flex-direction: column;
+}
+
+.MovieFormField-Name {
+  color: #f65261;
+  font-weight: bold;
+}
