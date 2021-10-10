@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import Modal from "react-bootstrap/Modal";
 import PropTypes from "prop-types";
 
@@ -63,4 +63,4 @@ ModalWindow.propTypes = {
   }),
 };
 
-export default ModalWindow;
+export default memo(ModalWindow);

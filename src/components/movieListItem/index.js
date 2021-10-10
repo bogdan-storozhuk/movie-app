@@ -2,8 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 
 import MovieListItemMenu from "../movieListItemMenu";
-
-import { getFormatedGenresDescription } from "../../utils";
+import GenresDescription from "../genresDescription";
 
 import "./movieListItem.css";
 
@@ -14,9 +13,15 @@ const MovieListItem = ({
   posterPath,
   handleEditMovie,
   handleDeleteMovie,
+  handleSelectMovie,
   id,
 }) => (
-  <div className="MovieListItem">
+  <div
+    className="MovieListItem"
+    onClick={() => {
+      handleSelectMovie(id);
+    }}
+  >
     <div
       style={{
         backgroundImage: `url(${posterPath})`,
@@ -35,9 +40,7 @@ const MovieListItem = ({
         {releaseDate.slice(0, 4)}
       </span>
     </div>
-    <p className="MovieListItem-Genres">
-      {getFormatedGenresDescription(genres)}
-    </p>
+    <GenresDescription genres={genres} />
   </div>
 );
 
@@ -51,6 +54,7 @@ MovieListItem.propTypes = {
   handleEditMovie: PropTypes.func,
   handleDeleteMovie: PropTypes.func,
   id: PropTypes.number,
+  handleSelectMovie: PropTypes.func,
 };
 
 export default MovieListItem;

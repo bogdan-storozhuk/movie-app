@@ -5,7 +5,12 @@ import MovieListItem from "../movieListItem";
 
 import "./movieList.css";
 
-const MovieList = ({ movies, handleEditMovie, handleDeleteMovie }) => (
+const MovieList = ({
+  movies,
+  handleEditMovie,
+  handleDeleteMovie,
+  handleSelectMovie,
+}) => (
   <div className="MovieList">
     {movies.map((movie) => {
       const { id, genres, releaseDate, title, posterPath } = movie;
@@ -19,6 +24,7 @@ const MovieList = ({ movies, handleEditMovie, handleDeleteMovie }) => (
           posterPath={posterPath}
           handleEditMovie={handleEditMovie}
           handleDeleteMovie={handleDeleteMovie}
+          handleSelectMovie={handleSelectMovie}
         />
       );
     })}
@@ -46,6 +52,7 @@ MovieList.propTypes = {
   ),
   handleEditMovie: PropTypes.func,
   handleDeleteMovie: PropTypes.func,
+  handleSelectMovie: PropTypes.func,
 };
 
 export default MovieList;
