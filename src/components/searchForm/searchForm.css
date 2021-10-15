@@ -1,3 +1,7 @@
+.Header-BottomPanel {
+  margin: 60px;
+}
+
 .search {
   width: 100%;
   display: flex;

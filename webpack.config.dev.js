@@ -35,6 +35,10 @@ module.exports = {
         include: path.join(__dirname, 'assets/img'),
         use: [{ loader: "file-loader" }],
       },
+      {
+        test: /\.svg$/,
+        use: ['@svgr/webpack'],
+      },
     ],
   },
   plugins: [

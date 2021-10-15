@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import PropTypes from "prop-types";
 
 import MovieList from "../movieList";
@@ -15,16 +15,25 @@ const MovieListWithLoading = WithLoading(MovieList);
 const MainContent = ({
   movies,
   genre,
+  sortBy,
   isLoading,
   handleEditMovie,
   handleDeleteMovie,
   handleSelectGenre,
+  handleSelectSortBy,
+  handleSelectMovie,
 }) => (
   <div className="MainContent">
-    <ControlPanel handleSelectGenre={handleSelectGenre} genre={genre} />
+    <ControlPanel
+      handleSelectGenre={handleSelectGenre}
+      genre={genre}
+      handleSelectSortBy={handleSelectSortBy}
+      sortBy={sortBy}
+    />
     <MovieCount count={movies.length} />
     <ErrorBoundry>
       <MovieListWithLoading
+        handleSelectMovie={handleSelectMovie}
         handleDeleteMovie={handleDeleteMovie}
         handleEditMovie={handleEditMovie}
         isLoading={isLoading}
@@ -57,7 +66,10 @@ MainContent.propTypes = {
   handleEditMovie: PropTypes.func,
   handleDeleteMovie: PropTypes.func,
   handleSelectGenre: PropTypes.func,
+  handleSelectMovie: PropTypes.func,
+  handleSelectSortBy: PropTypes.func,
   genre: PropTypes.string,
+  sortBy: PropTypes.string,
 };
 
-export default MainContent;
+export default memo(MainContent);
