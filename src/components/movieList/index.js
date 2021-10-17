@@ -7,9 +7,6 @@ import "./movieList.css";
 
 const MovieList = ({
   movies,
-  handleEditMovie,
-  handleDeleteMovie,
-  handleSelectMovie,
 }) => (
   <div className="MovieList">
     {movies.map((movie) => {
@@ -22,9 +19,6 @@ const MovieList = ({
           releaseDate={releaseDate}
           title={title}
           posterPath={posterPath}
-          handleEditMovie={handleEditMovie}
-          handleDeleteMovie={handleDeleteMovie}
-          handleSelectMovie={handleSelectMovie}
         />
       );
     })}
@@ -50,9 +44,6 @@ MovieList.propTypes = {
       voteCount: PropTypes.number,
     })
   ),
-  handleEditMovie: PropTypes.func,
-  handleDeleteMovie: PropTypes.func,
-  handleSelectMovie: PropTypes.func,
 };
 
 export default MovieList;

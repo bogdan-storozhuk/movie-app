@@ -1,8 +1,11 @@
 import React from "react";
+import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
 import MovieListItemMenu from "../movieListItemMenu";
 import GenresDescription from "../genresDescription";
+
+import { selectMovie } from "../../reducers/movies/actions";
 
 import "./movieListItem.css";
 
@@ -11,15 +14,13 @@ const MovieListItem = ({
   releaseDate,
   title,
   posterPath,
-  handleEditMovie,
-  handleDeleteMovie,
-  handleSelectMovie,
   id,
+  selectMovie,
 }) => (
   <div
     className="MovieListItem"
     onClick={() => {
-      handleSelectMovie(id);
+      selectMovie(id);
     }}
   >
     <div
@@ -28,11 +29,7 @@ const MovieListItem = ({
       }}
       className="MovieListItem-Container"
     >
-      <MovieListItemMenu
-        id={id}
-        handleEditMovie={handleEditMovie}
-        handleDeleteMovie={handleDeleteMovie}
-      />
+      <MovieListItemMenu id={id} />
     </div>
     <div className="MovieListItem-Details">
       <span className="MovieListItem-Details-Title">{title}</span>
@@ -44,6 +41,12 @@ const MovieListItem = ({
   </div>
 );
 
+function mapDispatchToProps(dispatch) {
+  return {
+    selectMovie: (id) => dispatch(selectMovie(id)),
+  };
+}
+
 MovieListItem.propTypes = {
   genres: PropTypes.arrayOf(
     PropTypes.shape({ id: PropTypes.number, name: PropTypes.string })
@@ -51,10 +54,8 @@ MovieListItem.propTypes = {
   releaseDate: PropTypes.string,
   title: PropTypes.string,
   posterPath: PropTypes.string,
-  handleEditMovie: PropTypes.func,
-  handleDeleteMovie: PropTypes.func,
   id: PropTypes.number,
-  handleSelectMovie: PropTypes.func,
+  selectMovie: PropTypes.func,
 };
 
-export default MovieListItem;
+export default connect(null, mapDispatchToProps)(MovieListItem);

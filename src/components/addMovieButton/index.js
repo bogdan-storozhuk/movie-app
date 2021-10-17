@@ -3,14 +3,14 @@ import PropTypes from "prop-types";
 
 import "./addMovieButton.css";
 
-const AddMovieButton = ({ handleAddNewMovie }) => (
-  <button onClick={handleAddNewMovie} className="AddMovieButton">
+const AddMovieButton = ({ openAddMovieModal }) => (
+  <button onClick={openAddMovieModal} className="AddMovieButton">
     + ADD MOVIE
   </button>
 );
 
 AddMovieButton.propTypes = {
-  handleAddNewMovie: PropTypes.func,
+  openAddMovieModal: PropTypes.func,
 };
 
 export default AddMovieButton;

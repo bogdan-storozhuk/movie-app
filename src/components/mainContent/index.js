@@ -1,4 +1,6 @@
-import React, { memo } from "react";
+import React, { useEffect } from "react";
+import { connect } from "react-redux";
+import { createStructuredSelector } from "reselect";
 import PropTypes from "prop-types";
 
 import MovieList from "../movieList";
@@ -8,6 +10,16 @@ import ErrorBoundry from "../errorBoundry";
 
 import WithLoading from "../../hoc/withLoading";
 
+import {
+  moviesSelector,
+  loadingSelector,
+  errorSelector,
+  genreSelector,
+  searchSelector,
+  sortBySelector,
+} from "../../reducers/movies/selectors";
+import { fetchMoviesStart } from "../../reducers/movies/actions";
+
 import "./mainContent.css";
 
 const MovieListWithLoading = WithLoading(MovieList);
@@ -16,32 +28,38 @@ const MainContent = ({
   movies,
   genre,
   sortBy,
-  isLoading,
-  handleEditMovie,
-  handleDeleteMovie,
-  handleSelectGenre,
-  handleSelectSortBy,
-  handleSelectMovie,
-}) => (
-  <div className="MainContent">
-    <ControlPanel
-      handleSelectGenre={handleSelectGenre}
-      genre={genre}
-      handleSelectSortBy={handleSelectSortBy}
-      sortBy={sortBy}
-    />
-    <MovieCount count={movies.length} />
-    <ErrorBoundry>
-      <MovieListWithLoading
-        handleSelectMovie={handleSelectMovie}
-        handleDeleteMovie={handleDeleteMovie}
-        handleEditMovie={handleEditMovie}
-        isLoading={isLoading}
-        movies={movies}
-      />
-    </ErrorBoundry>
-  </div>
-);
+  fetchMoviesStart,
+  loading,
+  search,
+}) => {
+  useEffect(() => {
+    fetchMoviesStart({ genre, search, sortBy });
+  }, [genre, search, sortBy]);
+  return (
+    <div className="MainContent">
+      <ControlPanel />
+      <MovieCount count={movies.length} />
+      <ErrorBoundry>
+        <MovieListWithLoading loading={loading} movies={movies} />
+      </ErrorBoundry>
+    </div>
+  );
+};
+
+const mapStateToProps = createStructuredSelector({
+  movies: moviesSelector,
+  loading: loadingSelector,
+  error: errorSelector,
+  genre: genreSelector,
+  search: searchSelector,
+  sortBy: sortBySelector,
+});
+
+function mapDispatchToProps(dispatch) {
+  return {
+    fetchMoviesStart: (genre) => dispatch(fetchMoviesStart(genre)),
+  };
+}
 
 MainContent.propTypes = {
   movies: PropTypes.arrayOf(
@@ -62,14 +80,11 @@ MainContent.propTypes = {
       voteCount: PropTypes.number,
     })
   ),
-  isLoading: PropTypes.bool,
-  handleEditMovie: PropTypes.func,
-  handleDeleteMovie: PropTypes.func,
-  handleSelectGenre: PropTypes.func,
-  handleSelectMovie: PropTypes.func,
-  handleSelectSortBy: PropTypes.func,
+  loading: PropTypes.bool,
   genre: PropTypes.string,
+  search: PropTypes.string,
   sortBy: PropTypes.string,
+  fetchMoviesStart: PropTypes.func,
 };
 
-export default memo(MainContent);
+export default connect(mapStateToProps, mapDispatchToProps)(MainContent);

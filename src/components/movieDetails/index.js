@@ -7,7 +7,7 @@ import GenresDescription from "../genresDescription";
 import "./movieDetails.css";
 
 const MovieDetails = ({
-  movie: {
+  selectedMovie: {
     posterPath,
     voteAverage,
     genres,
@@ -44,7 +44,7 @@ const MovieDetails = ({
 );
 
 MovieDetails.propTypes = {
-  movie: PropTypes.shape({
+  selectedMovie: PropTypes.shape({
     budget: PropTypes.number,
     genres: PropTypes.arrayOf(
       PropTypes.shape({ id: PropTypes.number, name: PropTypes.string })

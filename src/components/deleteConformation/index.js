@@ -4,9 +4,9 @@ import Button from "react-bootstrap/Button";
 
 import "./deleteConformation.css";
 
-const DeleteConformation = ({ movie }) => {
+const DeleteConformation = ({ selectedMovie }) => {
   const handleDelete = () => {
-    console.log(`delete`, movie);
+    console.log(`delete`, selectedMovie);
   };
   return (
     <>
@@ -23,7 +23,7 @@ const DeleteConformation = ({ movie }) => {
 };
 
 DeleteConformation.propTypes = {
-  movie: PropTypes.shape({
+  selectedMovie: PropTypes.shape({
     budget: PropTypes.number,
     genres: PropTypes.arrayOf(
       PropTypes.shape({ id: PropTypes.number, name: PropTypes.string })

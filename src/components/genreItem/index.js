@@ -3,8 +3,8 @@ import PropTypes from "prop-types";
 
 import "./genreItem.css";
 
-const GenreItem = ({ genre, handleSelectGenre, getSelectedGenre }) => (
-  <li onClick={() => handleSelectGenre(genre.name)} className="genreItem">
+const GenreItem = ({ genre, setGenre, getSelectedGenre }) => (
+  <li onClick={() => setGenre(genre.name)} className="genreItem">
     <span className={`genreItemMessage ${getSelectedGenre(genre.name)}`}>
       {genre.name}
     </span>
@@ -16,7 +16,7 @@ GenreItem.propTypes = {
     id: PropTypes.number,
     name: PropTypes.string,
   }),
-  handleSelectGenre: PropTypes.func,
+  setGenre: PropTypes.func,
   getSelectedGenre: PropTypes.func,
 };
 

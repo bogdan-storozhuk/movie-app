@@ -1,11 +1,17 @@
 import React, { useState } from "react";
+import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { ThreeDotsVertical } from "react-bootstrap-icons";
 import { Toast } from "react-bootstrap";
 
+import {
+  openDeleteMovieModal,
+  openEditMovieModal,
+} from "../../reducers/modals/actions";
+
 import "./movieListItemMenu.css";
 
-const MovieListItemMenu = ({ id, handleEditMovie, handleDeleteMovie }) => {
+const MovieListItemMenu = ({ id, openEditMovieModal, openDeleteMovieModal }) => {
   const [show, setShow] = useState(true);
   const onToggleMenu = (e) => {
     e.stopPropagation();
@@ -13,11 +19,11 @@ const MovieListItemMenu = ({ id, handleEditMovie, handleDeleteMovie }) => {
   };
   const onEditMovieClick = (e) => {
     e.stopPropagation();
-    handleEditMovie(id);
+    openEditMovieModal(id);
   };
   const onDeleteMovieClick = (e) => {
     e.stopPropagation();
-    handleDeleteMovie(id);
+    openDeleteMovieModal(id);
   };
 
   return (
@@ -46,10 +52,17 @@ const MovieListItemMenu = ({ id, handleEditMovie, handleDeleteMovie }) => {
   );
 };
 
+function mapDispatchToProps(dispatch) {
+  return {
+    openDeleteMovieModal: (id) => dispatch(openDeleteMovieModal(id)),
+    openEditMovieModal: (id) => dispatch(openEditMovieModal(id)),
+  };
+}
+
 MovieListItemMenu.propTypes = {
   id: PropTypes.number,
-  handleEditMovie: PropTypes.func,
-  handleDeleteMovie: PropTypes.func,
+  openDeleteMovieModal: PropTypes.func,
+  openEditMovieModal: PropTypes.func,
 };
 
-export default MovieListItemMenu;
+export default connect(null, mapDispatchToProps)(MovieListItemMenu);

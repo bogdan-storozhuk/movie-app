@@ -5,7 +5,7 @@ import Title from "../title";
 
 import "./searchForm.css";
 
-const SearchForm = ({ handleSubmitSearch }) => {
+const SearchForm = ({ submitSearch }) => {
   const [value, setValue] = useState("");
 
   const handleChange = (e) => {
@@ -24,7 +24,7 @@ const SearchForm = ({ handleSubmitSearch }) => {
           placeholder="What do you want to watch?"
         />
         <button
-          onClick={() => handleSubmitSearch(value)}
+          onClick={() => submitSearch(value)}
           type="submit"
           className="searchButton"
         >
@@ -36,7 +36,7 @@ const SearchForm = ({ handleSubmitSearch }) => {
 };
 
 SearchForm.propTypes = {
-  handleSubmitSearch: PropTypes.func,
+  submitSearch: PropTypes.func,
 };
 
 export default SearchForm;

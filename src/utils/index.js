@@ -45,6 +45,18 @@ const mapMovieJson = (movieData) => {
   });
 };
 
+const mapMovieJsonToBackEndFormat = (value) => {
+  if (value === "voteAverage") {
+    return "vote_average";
+  } else if (value === "voteCount") {
+    return "vote_count";
+  } else if (value === "releaseDate") {
+    return "release_date";
+  } else{
+    return value
+  }
+};
+
 const formatMoviesArray = (movies) => {
   return movies.map((movie) => {
     const { genres, ...rest } = movie;
@@ -58,4 +70,5 @@ export {
   getGenreList,
   mapMovieJson,
   formatMoviesArray,
+  mapMovieJsonToBackEndFormat
 };

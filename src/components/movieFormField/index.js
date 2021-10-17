@@ -48,7 +48,7 @@ MovieFormField.propTypes = {
     PropTypes.shape({
       id: PropTypes.number,
       name: PropTypes.string,
-    })
+    }),
   ]),
   text: PropTypes.string,
 };

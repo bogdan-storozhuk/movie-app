@@ -1,4 +1,6 @@
-import React, { memo } from "react";
+import React from "react";
+import { connect } from "react-redux";
+import { createStructuredSelector } from "reselect";
 import Modal from "react-bootstrap/Modal";
 import PropTypes from "prop-types";
 
@@ -8,9 +10,16 @@ import Title from "../title";
 
 import { ModalTypes } from "../../assets/constants";
 
+import { closeMovieModal } from "../../reducers/modals/actions";
+import {
+  showModalSelector,
+  modalTypeSelector,
+} from "../../reducers/modals/selectors";
+import { selectedMovieSelector } from "../../reducers/movies/selectors";
+
 import "./modalWindow.css";
 
-const ModalWindow = ({ handleClose, show, modalType, movie }) => {
+const ModalWindow = ({ closeMovieModal, show, modalType, selectedMovie }) => {
   let titleMessage;
   if (modalType === ModalTypes.NEW) {
     titleMessage = "ADD MOVIE";
@@ -19,11 +28,12 @@ const ModalWindow = ({ handleClose, show, modalType, movie }) => {
   } else if (modalType === ModalTypes.DELETE) {
     titleMessage = "DELETE MOVIE";
   }
+
   return (
     <Modal
       className="ModalWindow"
       show={show}
-      onHide={handleClose}
+      onHide={closeMovieModal}
       centered
       size={modalType === ModalTypes.DELETE ? "md" : "lg"}
     >
@@ -32,20 +42,35 @@ const ModalWindow = ({ handleClose, show, modalType, movie }) => {
       </Modal.Header>
       <Modal.Body className="ModalWindow-Body">
         {modalType === ModalTypes.DELETE ? (
-          <DeleteConformation handleClose={handleClose} movie={movie} />
+          <DeleteConformation selectedMovie={selectedMovie} />
         ) : (
-          <MovieForm handleClose={handleClose} movie={movie} />
+          <MovieForm
+            closeMovieModal={closeMovieModal}
+            selectedMovie={selectedMovie}
+          />
         )}
       </Modal.Body>
     </Modal>
   );
 };
 
+const mapStateToProps = createStructuredSelector({
+  show: showModalSelector,
+  modalType: modalTypeSelector,
+  selectedMovie: selectedMovieSelector,
+});
+
+function mapDispatchToProps(dispatch) {
+  return {
+    closeMovieModal: () => dispatch(closeMovieModal()),
+  };
+}
+
 ModalWindow.propTypes = {
-  handleClose: PropTypes.func,
+  closeMovieModal: PropTypes.func,
   show: PropTypes.bool,
   modalType: PropTypes.string,
-  movie: PropTypes.shape({
+  selectedMovie: PropTypes.shape({
     budget: PropTypes.number,
     genres: PropTypes.arrayOf(
       PropTypes.shape({ id: PropTypes.number, name: PropTypes.string })
@@ -63,4 +88,4 @@ ModalWindow.propTypes = {
   }),
 };
 
-export default memo(ModalWindow);
+export default connect(mapStateToProps, mapDispatchToProps)(ModalWindow);
