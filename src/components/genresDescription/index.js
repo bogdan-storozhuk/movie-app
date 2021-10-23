@@ -6,7 +6,9 @@ import { getFormatedGenresDescription } from "../../utils";
 import "./genresDescription.css";
 
 const GenresDescription = ({ genres }) => (
-  <p className="GenresDescription">{getFormatedGenresDescription(genres)}</p>
+  <p className="GenresDescription">
+    {genres.length !== 0 ? getFormatedGenresDescription(genres) : "No genres"}
+  </p>
 );
 
 GenresDescription.propTypes = {

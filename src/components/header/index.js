@@ -1,45 +1,62 @@
-import React, { memo } from "react";
+import React from "react";
+import { connect } from "react-redux";
+import { createStructuredSelector } from "reselect";
 import PropTypes from "prop-types";
 
 import Logo from "../logo";
 import AddMovieButton from "../addMovieButton";
 import SearchForm from "../searchForm";
 import MovieDetails from "../movieDetails";
-import SearchButton from "../searchButton";
+import BackButton from "../backButton";
+
+import { selectMovie, submitSearch } from "../../reducers/movies/actions";
+import { openAddMovieModal } from "../../reducers/modals/actions";
+import { selectedMovieSelector } from "../../reducers/movies/selectors";
 
 import "./header.css";
 
 const Header = ({
-  handleAddNewMovie,
-  handleSubmitSearch,
-  handleSelectMovie,
-  movie,
+  submitSearch,
+  resetMovie,
+  openAddMovieModal,
+  selectedMovie,
 }) => (
   <>
     <div className="Background"></div>
     <div className="Header">
       <div className="Header-Panel">
         <Logo />
-        {movie ? (
-          <SearchButton handleSelectMovie={handleSelectMovie} />
+        {selectedMovie ? (
+          <BackButton resetMovie={resetMovie} />
         ) : (
-          <AddMovieButton handleAddNewMovie={handleAddNewMovie} />
+          <AddMovieButton openAddMovieModal={openAddMovieModal} />
         )}
       </div>
-      {movie ? (
-        <MovieDetails movie={movie} />
+      {selectedMovie ? (
+        <MovieDetails selectedMovie={selectedMovie} />
       ) : (
-        <SearchForm handleSubmitSearch={handleSubmitSearch} />
+        <SearchForm submitSearch={submitSearch} />
       )}
     </div>
   </>
 );
 
+const mapStateToProps = createStructuredSelector({
+  selectedMovie: selectedMovieSelector,
+});
+
+function mapDispatchToProps(dispatch) {
+  return {
+    resetMovie: () => dispatch(selectMovie(null)),
+    submitSearch: (search) => dispatch(submitSearch(search)),
+    openAddMovieModal: () => dispatch(openAddMovieModal()),
+  };
+}
+
 Header.propTypes = {
-  handleAddNewMovie: PropTypes.func,
-  handleSubmitSearch: PropTypes.func,
-  handleSelectMovie: PropTypes.func,
-  movie: PropTypes.shape({
+  submitSearch: PropTypes.func,
+  resetMovie: PropTypes.func,
+  selectedMovie: PropTypes.shape({
     budget: PropTypes.number,
     genres: PropTypes.arrayOf(
       PropTypes.shape({ id: PropTypes.number, name: PropTypes.string })
@@ -57,4 +74,4 @@ Header.propTypes = {
   }),
 };
 
-export default memo(Header);
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

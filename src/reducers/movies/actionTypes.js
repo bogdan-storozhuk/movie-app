@@ -1,0 +1,19 @@
+const FETCH_MOVIES_START = "movies-app/movies/FETCH_MOVIES_START";
+const FETCH_MOVIES_REQUEST = "movies-app/movies/FETCH_MOVIES_REQUEST";
+const FETCH_MOVIES_SUCCESS = "movies-app/movies/FETCH_MOVIES_SUCCESS";
+const FETCH_MOVIES_FAILURE = "movies-app/movies/FETCH_MOVIES_FAILURE";
+const SET_GENRE = "movies-app/movies/SET_GENRE";
+const SELECT_MOVIE = "movies-app/movies/SELECT_MOVIE";
+const SELECT_SORT_BY = "movies-app/movies/SELECT_SORT_BY";
+const SUBMIT_SEARCH = "movies-app/movies/SUBMIT_SEARCH";
+
+export {
+  FETCH_MOVIES_START,
+  FETCH_MOVIES_REQUEST,
+  FETCH_MOVIES_SUCCESS,
+  FETCH_MOVIES_FAILURE,
+  SET_GENRE,
+  SELECT_MOVIE,
+  SELECT_SORT_BY,
+  SUBMIT_SEARCH
+};

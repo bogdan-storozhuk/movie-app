@@ -8,14 +8,14 @@ import MovieFormField from "../movieFormField";
 
 import "./movieForm.css";
 
-const MovieForm = ({ handleClose, movie }) => {
+const MovieForm = ({ closeMovieModal, selectedMovie }) => {
   const [formData, setFormData] = useState({
     title: "",
     releaseDate: "",
     movieUrl: "",
-    rating: "",
+    rating: 0,
     genre: [],
-    runtime: "",
+    runtime: 0,
     overview: "",
   });
 
@@ -34,7 +34,7 @@ const MovieForm = ({ handleClose, movie }) => {
   };
 
   useEffect(() => {
-    if (movie) {
+    if (selectedMovie) {
       const {
         title,
         releaseDate,
@@ -43,7 +43,7 @@ const MovieForm = ({ handleClose, movie }) => {
         genres,
         runtime,
         overview,
-      } = movie;
+      } = selectedMovie;
       setFormData({
         title: title,
         releaseDate: releaseDate,
@@ -54,7 +54,7 @@ const MovieForm = ({ handleClose, movie }) => {
         overview: overview,
       });
     }
-  }, [movie]);
+  }, [selectedMovie]);
 
   return (
     <form className="MovieForm" onSubmit={handleSubmit}>
@@ -86,7 +86,7 @@ const MovieForm = ({ handleClose, movie }) => {
         <Button
           className="MovieForm-Controls-Reset"
           variant="secondary"
-          onClick={handleClose}
+          onClick={closeMovieModal}
         >
           RESET
         </Button>
@@ -96,8 +96,8 @@ const MovieForm = ({ handleClose, movie }) => {
 };
 
 MovieForm.propTypes = {
-  handleClose: PropTypes.func,
-  movie: PropTypes.shape({
+  closeMovieModal: PropTypes.func,
+  selectedMovie: PropTypes.shape({
     budget: PropTypes.number,
     genres: PropTypes.arrayOf(
       PropTypes.shape({ id: PropTypes.number, name: PropTypes.string })
