@@ -1,6 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
+import { connect } from "react-redux";
 import Button from "react-bootstrap/Button";
+import { Formik } from "formik";
 import PropTypes from "prop-types";
+
+import { postMovieStart, editMovieStart } from "../../reducers/movies/actions";
 
 import { formFields } from "../../assets/constants";
 
@@ -8,95 +12,121 @@ import MovieFormField from "../movieFormField";
 
 import "./movieForm.css";
 
-const MovieForm = ({ closeMovieModal, selectedMovie }) => {
-  const [formData, setFormData] = useState({
-    title: "",
-    releaseDate: "",
-    movieUrl: "",
-    rating: 0,
-    genre: [],
-    runtime: 0,
-    overview: "",
-  });
-
-  const handleChangeInput = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
-
-  const handleChangeGenre = (genres) => {
-    setFormData({ ...formData, genre: genres });
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log(formData);
-  };
-
-  useEffect(() => {
-    if (selectedMovie) {
-      const {
-        title,
-        releaseDate,
-        posterPath,
-        voteAverage,
-        genres,
-        runtime,
-        overview,
-      } = selectedMovie;
-      setFormData({
-        title: title,
-        releaseDate: releaseDate,
-        movieUrl: posterPath,
-        rating: voteAverage,
-        genre: genres,
-        runtime: runtime,
-        overview: overview,
-      });
-    }
-  }, [selectedMovie]);
-
+const MovieForm = ({
+  closeMovieModal,
+  postMovieStart,
+  editMovieStart,
+  selectedMovie,
+}) => {
   return (
-    <form className="MovieForm" onSubmit={handleSubmit}>
-      <div className="MovieForm-MovieFormFields">
-        {formFields.map(({ name, text, id }) => (
-          <MovieFormField
-            key={id}
-            onChange={name === "genre" ? handleChangeGenre : handleChangeInput}
-            name={name}
-            value={formData[name]}
-            text={text}
-          />
-        ))}
-      </div>
-      <MovieFormField
-        onChange={handleChangeInput}
-        name="overview"
-        value={formData.overview}
-        text={"OVERVIEW"}
-      />
-      <div className="MovieForm-Controls">
-        <Button
-          className="MovieForm-Controls-Submit"
-          type="submit"
-          variant="primary"
-        >
-          SUBMIT
-        </Button>
-        <Button
-          className="MovieForm-Controls-Reset"
-          variant="secondary"
-          onClick={closeMovieModal}
-        >
-          RESET
-        </Button>
-      </div>
-    </form>
+    <Formik
+      initialValues={
+        selectedMovie
+          ? selectedMovie
+          : {
+              title: "",
+              releaseDate: "",
+              posterPath: "",
+              voteAverage: 0,
+              genres: [],
+              runtime: 0,
+              overview: "",
+            }
+      }
+      validate={(values) => {
+        const errors = {};
+        formFields.forEach((field) => {
+          const { name } = field;
+          if (!values[name]) {
+            errors[name] = "Required";
+          }
+        });
+        if (!values["overview"]) {
+          errors["overview"] = "Required";
+        }
+        return errors;
+      }}
+      onSubmit={(values, { setSubmitting }) => {
+        if (selectedMovie) {
+          editMovieStart(values);
+        } else {
+          postMovieStart(values);
+        }
+        setSubmitting(false);
+      }}
+    >
+      {({
+        values,
+        errors,
+        touched,
+        handleChange,
+        handleBlur,
+        handleSubmit,
+        isSubmitting,
+        setFieldValue,
+      }) => {
+        return (
+          <form className="MovieForm" onSubmit={handleSubmit}>
+            <div className="MovieForm-MovieFormFields">
+              {formFields.map(({ name, text, id }) => (
+                <MovieFormField
+                  key={id}
+                  handleChange={
+                    name === "genres" ? setFieldValue : handleChange
+                  }
+                  handleBlur={handleBlur}
+                  name={name}
+                  value={values[name]}
+                  text={text}
+                  errors={errors}
+                  touched={touched}
+                />
+              ))}
+            </div>
+            <MovieFormField
+              handleChange={handleChange}
+              handleBlur={handleBlur}
+              name="overview"
+              value={values["overview"]}
+              text={"OVERVIEW"}
+              errors={errors}
+              touched={touched}
+            />
+            <div className="MovieForm-Controls">
+              <Button
+                className="MovieForm-Controls-Submit"
+                type="submit"
+                variant="primary"
+                disabled={isSubmitting}
+              >
+                SUBMIT
+              </Button>
+              <Button
+                className="MovieForm-Controls-Reset"
+                variant="secondary"
+                onClick={closeMovieModal}
+              >
+                RESET
+              </Button>
+            </div>
+          </form>
+        );
+      }}
+    </Formik>
   );
 };
 
+function mapDispatchToProps(dispatch) {
+  return {
+    postMovieStart: (movie) => dispatch(postMovieStart(movie)),
+    editMovieStart: (movie) => dispatch(editMovieStart(movie)),
+  };
+}
+
 MovieForm.propTypes = {
   closeMovieModal: PropTypes.func,
+  postMovieStart: PropTypes.func,
+  editMovieStart: PropTypes.func,
   selectedMovie: PropTypes.shape({
     budget: PropTypes.number,
     genres: PropTypes.arrayOf(
@@ -115,4 +145,4 @@ MovieForm.propTypes = {
   }),
 };
 
-export default MovieForm;
+export default connect(null, mapDispatchToProps)(MovieForm);

@@ -42,7 +42,7 @@ const ModalWindow = ({ closeMovieModal, show, modalType, selectedMovie }) => {
       </Modal.Header>
       <Modal.Body className="ModalWindow-Body">
         {modalType === ModalTypes.DELETE ? (
-          <DeleteConformation selectedMovie={selectedMovie} />
+          <DeleteConformation id={selectedMovie.id} />
         ) : (
           <MovieForm
             closeMovieModal={closeMovieModal}

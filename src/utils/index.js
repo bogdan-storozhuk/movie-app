@@ -45,16 +45,43 @@ const mapMovieJson = (movieData) => {
   });
 };
 
-const mapMovieJsonToBackEndFormat = (value) => {
-  if (value === "voteAverage") {
-    return "vote_average";
-  } else if (value === "voteCount") {
-    return "vote_count";
-  } else if (value === "releaseDate") {
-    return "release_date";
-  } else{
-    return value
+const mapMovieFieldNameToBackEndFormat = (value) => {
+  switch (value) {
+    case "voteAverage":
+      return "vote_average";
+    case "voteCount":
+      return "vote_count";
+    case "releaseDate":
+      return "release_date";
+    case "posterPath":
+      return "poster_path";
+    default:
+      return value;
   }
+};
+
+const mapMovieFieldValueToBackEndFormat = (key, value) => {
+  switch (key) {
+    case "voteAverage":
+    case "runtime":
+      return Number.parseInt(value);
+    case "genres":
+      const updatedGenres = value.map(({ name }) => name);
+      return updatedGenres;
+    case "tagline":
+      return value ? value : "default tagline";
+    default:
+      return value;
+  }
+};
+
+const mapMovieJsonToBackEndFormat = (movie) => {
+  const reformatedMovie = {};
+  for (const key in movie) {
+    reformatedMovie[mapMovieFieldNameToBackEndFormat(key)] =
+      mapMovieFieldValueToBackEndFormat(key, movie[key]);
+  }
+  return reformatedMovie;
 };
 
 const formatMoviesArray = (movies) => {
@@ -70,5 +97,6 @@ export {
   getGenreList,
   mapMovieJson,
   formatMoviesArray,
-  mapMovieJsonToBackEndFormat
+  mapMovieFieldNameToBackEndFormat,
+  mapMovieJsonToBackEndFormat,
 };

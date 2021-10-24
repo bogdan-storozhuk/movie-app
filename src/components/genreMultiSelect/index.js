@@ -6,24 +6,31 @@ import { getGenreList } from "../../utils";
 
 import "./genreMultiSelect.css";
 
-const GenreMultiSelect = ({ onChange, name, value }) => (
-  <div className="GenreMultiSelect">
-    <Multiselect
-      options={getGenreList()}
-      displayValue="name"
-      showCheckbox={true}
-      selectedValues={value}
-      onSelect={onChange}
-      onRemove={onChange}
-      placeholder="Select Genre"
-      showArrow
-      name={name}
-    />
-  </div>
-);
+const GenreMultiSelect = ({ handleChange, handleBlur, name, value }) => {
+  const handleChangeGenre = (genres) => {
+    handleChange(name, genres);
+  };
+  return (
+    <div className="GenreMultiSelect">
+      <Multiselect
+        options={getGenreList()}
+        displayValue="name"
+        showCheckbox={true}
+        selectedValues={value}
+        onSelect={handleChangeGenre}
+        onRemove={handleChangeGenre}
+        onBlur={handleBlur}
+        placeholder="Select Genre"
+        showArrow
+        name={name}
+      />
+    </div>
+  );
+};
 
 GenreMultiSelect.propTypes = {
-  onChange: PropTypes.func,
+  handleChange: PropTypes.func,
+  handleBlur: PropTypes.func,
   name: PropTypes.string,
   value: PropTypes.arrayOf(
     PropTypes.shape({ id: PropTypes.number, name: PropTypes.string })

@@ -3,10 +3,11 @@ import PropTypes from "prop-types";
 
 import "./overviewTextarea.css";
 
-const OverviewTextarea = ({ onChange, name, value }) => (
+const OverviewTextarea = ({ handleChange, handleBlur, name, value }) => (
   <textarea
     className="OverviewTextarea"
-    onChange={onChange}
+    onChange={handleChange}
+    onBlur={handleBlur}
     value={value}
     type="text"
     name={name}
@@ -15,7 +16,8 @@ const OverviewTextarea = ({ onChange, name, value }) => (
 );
 
 OverviewTextarea.propTypes = {
-  onChange: PropTypes.func,
+  handleChange: PropTypes.func,
+  handleBlur: PropTypes.func,
   name: PropTypes.string,
   value: PropTypes.string,
 };

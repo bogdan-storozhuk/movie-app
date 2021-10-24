@@ -1,12 +1,15 @@
 import React from "react";
+import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import Button from "react-bootstrap/Button";
 
+import { deleteMovieStart } from "../../reducers/movies/actions";
+
 import "./deleteConformation.css";
 
-const DeleteConformation = ({ selectedMovie }) => {
+const DeleteConformation = ({ id, deleteMovieStart }) => {
   const handleDelete = () => {
-    console.log(`delete`, selectedMovie);
+    deleteMovieStart(id);
   };
   return (
     <>
@@ -22,23 +25,15 @@ const DeleteConformation = ({ selectedMovie }) => {
   );
 };
 
+function mapDispatchToProps(dispatch) {
+  return {
+    deleteMovieStart: (id) => dispatch(deleteMovieStart(id)),
+  };
+}
+
 DeleteConformation.propTypes = {
-  selectedMovie: PropTypes.shape({
-    budget: PropTypes.number,
-    genres: PropTypes.arrayOf(
-      PropTypes.shape({ id: PropTypes.number, name: PropTypes.string })
-    ),
-    id: PropTypes.number,
-    overview: PropTypes.string,
-    posterPath: PropTypes.string,
-    releaseDate: PropTypes.string,
-    revenue: PropTypes.number,
-    runtime: PropTypes.number,
-    tagline: PropTypes.string,
-    title: PropTypes.string,
-    voteAverage: PropTypes.number,
-    voteCount: PropTypes.number,
-  }),
+  id: PropTypes.number,
+  deleteMovieStart: PropTypes.func,
 };
 
-export default DeleteConformation;
+export default connect(null, mapDispatchToProps)(DeleteConformation);

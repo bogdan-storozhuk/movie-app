@@ -1,4 +1,5 @@
 import * as ActionTypes from "./actionTypes";
+import * as MoviesActionTypes from "../movies/actionTypes";
 
 const initialState = {
   showModal: false,
@@ -15,6 +16,9 @@ const modalsReducer = (state = initialState, action) => {
         showModal: true,
         modalType: action.payload.modalType,
       };
+    case MoviesActionTypes.POST_MOVIE_SUCCESS:
+    case MoviesActionTypes.DELETE_MOVIE_SUCCESS:
+    case MoviesActionTypes.EDIT_MOVIE_SUCCESS:
     case ActionTypes.CLOSE_MOVIE_MODAL:
       return {
         ...state,

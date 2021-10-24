@@ -7,19 +7,42 @@ import OverviewTextarea from "../overviewTextarea";
 
 import "./movieFormField.css";
 
-const MovieFormField = ({ onChange, name, value, text }) => {
+const MovieFormField = ({
+  handleChange,
+  handleBlur,
+  name,
+  value,
+  text,
+  errors,
+  touched,
+}) => {
   let component;
-  if (name === "genre") {
+  if (name === "genres") {
     component = (
-      <GenreMultiSelect onChange={onChange} name={name} value={value} />
+      <GenreMultiSelect
+        handleChange={handleChange}
+        handleBlur={handleBlur}
+        name={name}
+        value={value}
+      />
     );
   } else if (name === "overview") {
     component = (
-      <OverviewTextarea onChange={onChange} name={name} value={value} />
+      <OverviewTextarea
+        handleChange={handleChange}
+        handleBlur={handleBlur}
+        name={name}
+        value={value}
+      />
     );
   } else {
     component = (
-      <MovieFormInput onChange={onChange} name={name} value={value} />
+      <MovieFormInput
+        handleChange={handleChange}
+        handleBlur={handleBlur}
+        name={name}
+        value={value}
+      />
     );
   }
   return (
@@ -28,12 +51,16 @@ const MovieFormField = ({ onChange, name, value, text }) => {
         {text}
       </label>
       {component}
+      {errors[name] && touched[name] && (
+        <div className="MovieFormField-Error">*{errors[name]}</div>
+      )}
     </div>
   );
 };
 
 MovieFormField.propTypes = {
-  onChange: PropTypes.func,
+  handleChange: PropTypes.func,
+  handleBlur: PropTypes.func,
   name: PropTypes.string,
   value: PropTypes.oneOfType([
     PropTypes.string,
@@ -51,6 +78,22 @@ MovieFormField.propTypes = {
     }),
   ]),
   text: PropTypes.string,
+  errors: PropTypes.shape({
+    title: PropTypes.string,
+    overview: PropTypes.string,
+    posterPath: PropTypes.string,
+    releaseDate: PropTypes.string,
+    runtime: PropTypes.string,
+    voteAverage: PropTypes.string,
+  }),
+  touched: PropTypes.shape({
+    title: PropTypes.bool,
+    overview: PropTypes.bool,
+    posterPath: PropTypes.bool,
+    releaseDate: PropTypes.bool,
+    runtime: PropTypes.bool,
+    voteAverage: PropTypes.bool,
+  }),
 };
 
 export default MovieFormField;

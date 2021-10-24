@@ -3,10 +3,11 @@ import PropTypes from "prop-types";
 
 import "./movieFormInput.css";
 
-const MovieFormInput = ({ onChange, name, value }) => (
+const MovieFormInput = ({ handleChange, handleBlur, name, value }) => (
   <input
     className="MovieFormInput"
-    onChange={onChange}
+    onChange={handleChange}
+    onBlur={handleBlur}
     value={value}
     type="text"
     name={name}
@@ -15,7 +16,8 @@ const MovieFormInput = ({ onChange, name, value }) => (
 );
 
 MovieFormInput.propTypes = {
-  onChange: PropTypes.func,
+  handleChange: PropTypes.func,
+  handleBlur: PropTypes.func,
   name: PropTypes.string,
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 };
