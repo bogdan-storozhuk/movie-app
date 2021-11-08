@@ -1,7 +1,12 @@
 import { combineReducers } from "redux";
 import { all } from "redux-saga/effects";
 
-import moviesReducer, { watchFetchMovies } from "./movies/moviesReducer";
+import moviesReducer, {
+  watchFetchMovies,
+  watchPostMovie,
+  watchDeleteMovie,
+  watchEditMovie,
+} from "./movies/moviesReducer";
 import modalsReducer from "./modals/modalsReducer";
 
 export default combineReducers({
@@ -10,5 +15,10 @@ export default combineReducers({
 });
 
 export function* rootSaga() {
-  yield all([watchFetchMovies()]);
+  yield all([
+    watchFetchMovies(),
+    watchPostMovie(),
+    watchDeleteMovie(),
+    watchEditMovie(),
+  ]);
 }

@@ -7,3 +7,8 @@
   color: #f65261;
   font-weight: bold;
 }
+
+.MovieFormField-Error {
+  color: #f65261;
+  font-size: 12px;
+}

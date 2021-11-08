@@ -1,4 +1,4 @@
-import { call, put, takeEvery } from "redux-saga/effects";
+import { call, put, takeEvery, select } from "redux-saga/effects";
 
 import * as ActionTypes from "./actionTypes";
 import * as ModalsActionTypes from "../modals/actionTypes";
@@ -6,11 +6,26 @@ import {
   fetchMoviesRequest,
   fetchMoviesSuccess,
   fetchMoviesFailure,
+  postMovieRequest,
+  postMovieSuccess,
+  postMovieFailure,
+  deleteMovieRequest,
+  deleteMovieSuccess,
+  deleteMovieFailure,
+  editMovieRequest,
+  editMovieSuccess,
+  editMovieFailure,
 } from "./actions";
-import { getMoviesAsync } from "../../services/movieService";
+import { searchOptionsSelector } from "./selectors";
+import {
+  getMoviesAsync,
+  postMovie,
+  deleteMovie,
+  editMovie,
+} from "../../services/movieService";
 
 const initialState = {
-  search: '',
+  search: "",
   movies: [],
   loading: false,
   error: null,
@@ -42,6 +57,32 @@ const moviesReducer = (state = initialState, action) => {
         loading: false,
         error: action.payload,
       };
+
+    case ActionTypes.POST_MOVIE_REQUEST:
+    case ActionTypes.DELETE_MOVIE_REQUEST:
+    case ActionTypes.EDIT_MOVIE_REQUEST:
+      return {
+        ...state,
+        loading: true,
+        error: null,
+      };
+    case ActionTypes.POST_MOVIE_SUCCESS:
+    case ActionTypes.DELETE_MOVIE_SUCCESS:
+    case ActionTypes.EDIT_MOVIE_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        error: null,
+      };
+    case ActionTypes.POST_MOVIE_FAILURE:
+    case ActionTypes.DELETE_MOVIE_FAILURE:
+    case ActionTypes.EDIT_MOVIE_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+
     case ActionTypes.SET_GENRE:
       return {
         ...state,
@@ -50,14 +91,16 @@ const moviesReducer = (state = initialState, action) => {
     case ActionTypes.SUBMIT_SEARCH:
       return {
         ...state,
-        search: action.payload
-      }
+        search: action.payload,
+      };
     case ModalsActionTypes.OPEN_EDIT_MOVIE_MODAL:
     case ModalsActionTypes.OPEN_DELETE_MOVIE_MODAL:
     case ActionTypes.SELECT_MOVIE:
       return {
         ...state,
-        selectedMovie: state.movies.find((element) => element.id === action.payload.id),
+        selectedMovie: state.movies.find(
+          (element) => element.id === action.payload.id
+        ),
       };
     case ModalsActionTypes.CLOSE_MOVIE_MODAL:
       return {
@@ -67,8 +110,8 @@ const moviesReducer = (state = initialState, action) => {
     case ActionTypes.SELECT_SORT_BY:
       return {
         ...state,
-        sortBy: action.payload
-      }
+        sortBy: action.payload,
+      };
     default:
       return state;
   }
@@ -89,4 +132,52 @@ export function* fetchMoviesAsync(action) {
 
 export function* watchFetchMovies() {
   yield takeEvery(ActionTypes.FETCH_MOVIES_START, fetchMoviesAsync);
+}
+
+export function* postMovieAsync(action) {
+  try {
+    yield put(postMovieRequest());
+    yield call(() => postMovie(action.payload));
+    yield put(postMovieSuccess());
+    const searchOptions = yield select(searchOptionsSelector);
+    yield call(fetchMoviesAsync, { payload: searchOptions });
+  } catch (error) {
+    yield put(postMovieFailure(error));
+  }
+}
+
+export function* watchPostMovie() {
+  yield takeEvery(ActionTypes.POST_MOVIE_START, postMovieAsync);
+}
+
+export function* deleteMovieAsync(action) {
+  try {
+    yield put(deleteMovieRequest());
+    yield call(() => deleteMovie(action.payload));
+    yield put(deleteMovieSuccess());
+    const searchOptions = yield select(searchOptionsSelector);
+    yield call(fetchMoviesAsync, { payload: searchOptions });
+  } catch (error) {
+    yield put(deleteMovieFailure(error));
+  }
+}
+
+export function* watchDeleteMovie() {
+  yield takeEvery(ActionTypes.DELETE_MOVIE_START, deleteMovieAsync);
+}
+
+export function* editMovieAsync(action) {
+  try {
+    yield put(editMovieRequest());
+    yield call(() => editMovie(action.payload));
+    yield put(editMovieSuccess());
+    const searchOptions = yield select(searchOptionsSelector);
+    yield call(fetchMoviesAsync, { payload: searchOptions });
+  } catch (error) {
+    yield put(editMovieFailure(error));
+  }
+}
+
+export function* watchEditMovie() {
+  yield takeEvery(ActionTypes.EDIT_MOVIE_START, editMovieAsync);
 }
