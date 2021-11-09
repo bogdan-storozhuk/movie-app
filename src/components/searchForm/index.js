@@ -1,12 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
 import PropTypes from "prop-types";
 
 import Title from "../title";
 
 import "./searchForm.css";
 
-const SearchForm = ({ submitSearch }) => {
+const SearchForm = ({ search }) => {
   const [value, setValue] = useState("");
+  const location = useLocation();
+
+  useEffect(() => {
+    setValue(search);
+  }, [search]);
 
   const handleChange = (e) => {
     setValue(e.target.value);
@@ -23,20 +29,22 @@ const SearchForm = ({ submitSearch }) => {
           className="searchTerm"
           placeholder="What do you want to watch?"
         />
-        <button
-          onClick={() => submitSearch(value)}
-          type="submit"
+        <Link
           className="searchButton"
+          to={{
+            pathname: `search/${value}`,
+            search: location.search,
+          }}
         >
           Search
-        </button>
+        </Link>
       </div>
     </div>
   );
 };
 
 SearchForm.propTypes = {
-  submitSearch: PropTypes.func,
+  search: PropTypes.string,
 };
 
 export default SearchForm;

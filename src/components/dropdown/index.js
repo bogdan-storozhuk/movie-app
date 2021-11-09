@@ -1,17 +1,30 @@
 import React from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
 import PropTypes from "prop-types";
 
 import { sortByList } from "../../assets/constants";
-import { selectSortBy } from "../../reducers/movies/actions";
 import { sortBySelector } from "../../reducers/movies/selectors";
+
+import { modifyQueryParamInSearch } from "../../utils";
 
 import "./dropdown.css";
 
-const DropDown = ({ selectSortBy, sortBy }) => {
+const DropDown = ({ sortBy }) => {
+  const { search, pathname } = useLocation();
+  const navigate = useNavigate();
+
   const handleSelectSortBy = (e) => {
-    selectSortBy(e.target.value);
+    const newSearch = modifyQueryParamInSearch(
+      search,
+      "sortBy",
+      e.target.value
+    );
+    navigate({
+      pathname: pathname,
+      search: `?${newSearch}`,
+    });
   };
 
   return (
@@ -41,15 +54,8 @@ const mapStateToProps = createStructuredSelector({
   sortBy: sortBySelector,
 });
 
-function mapDispatchToProps(dispatch) {
-  return {
-    selectSortBy: (sortBy) => dispatch(selectSortBy(sortBy)),
-  };
-}
-
 DropDown.propTypes = {
-  handleSelectSortBy: PropTypes.func,
   sortBy: PropTypes.string,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(DropDown);
+export default connect(mapStateToProps)(DropDown);

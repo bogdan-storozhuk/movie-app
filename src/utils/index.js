@@ -1,3 +1,5 @@
+import qs from "query-string";
+
 const getFormatedGenresDescription = (genres) => {
   if (genres.length === 2) {
     return `${genres[0].name} & ${genres[1].name}`;
@@ -92,6 +94,15 @@ const formatMoviesArray = (movies) => {
   });
 };
 
+const modifyQueryParamInSearch = (search, name, value) => {
+  const queryParams = qs.parse(search);
+  const newQueryParams = {
+    ...queryParams,
+    [name]: value,
+  };
+  return qs.stringify(newQueryParams);
+};
+
 export {
   getFormatedGenresDescription,
   getGenreList,
@@ -99,4 +110,5 @@ export {
   formatMoviesArray,
   mapMovieFieldNameToBackEndFormat,
   mapMovieJsonToBackEndFormat,
+  modifyQueryParamInSearch,
 };
