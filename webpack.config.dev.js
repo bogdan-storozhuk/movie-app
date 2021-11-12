@@ -8,6 +8,7 @@ module.exports = {
   output: {
     path: path.join(__dirname, "/dist"),
     filename: "index_bundle.js",
+    publicPath: "/",
   },
   resolve: {
     modules: [path.resolve(__dirname, "./src"), "node_modules"],
@@ -32,12 +33,12 @@ module.exports = {
       },
       {
         test: /\.(gif|png|jpe?g|svg)$/i,
-        include: path.join(__dirname, 'assets/img'),
+        include: path.join(__dirname, "assets/img"),
         use: [{ loader: "file-loader" }],
       },
       {
         test: /\.svg$/,
-        use: ['@svgr/webpack'],
+        use: ["@svgr/webpack"],
       },
     ],
   },
@@ -46,4 +47,7 @@ module.exports = {
       template: "./src/index.html",
     }),
   ],
+  devServer: {
+    historyApiFallback: true,
+  },
 };

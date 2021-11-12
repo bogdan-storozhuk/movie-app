@@ -9,18 +9,16 @@ import SearchForm from "../searchForm";
 import MovieDetails from "../movieDetails";
 import BackButton from "../backButton";
 
-import { selectMovie, submitSearch } from "../../reducers/movies/actions";
+import { selectMovie } from "../../reducers/movies/actions";
 import { openAddMovieModal } from "../../reducers/modals/actions";
-import { selectedMovieSelector } from "../../reducers/movies/selectors";
+import {
+  selectedMovieSelector,
+  searchSelector,
+} from "../../reducers/movies/selectors";
 
 import "./header.css";
 
-const Header = ({
-  submitSearch,
-  resetMovie,
-  openAddMovieModal,
-  selectedMovie,
-}) => (
+const Header = ({ resetMovie, openAddMovieModal, selectedMovie, search }) => (
   <>
     <div className="Background"></div>
     <div className="Header">
@@ -35,7 +33,7 @@ const Header = ({
       {selectedMovie ? (
         <MovieDetails selectedMovie={selectedMovie} />
       ) : (
-        <SearchForm submitSearch={submitSearch} />
+        <SearchForm search={search} />
       )}
     </div>
   </>
@@ -43,19 +41,19 @@ const Header = ({
 
 const mapStateToProps = createStructuredSelector({
   selectedMovie: selectedMovieSelector,
+  search: searchSelector,
 });
 
 function mapDispatchToProps(dispatch) {
   return {
     resetMovie: () => dispatch(selectMovie(null)),
-    submitSearch: (search) => dispatch(submitSearch(search)),
     openAddMovieModal: () => dispatch(openAddMovieModal()),
   };
 }
 
 Header.propTypes = {
-  submitSearch: PropTypes.func,
   resetMovie: PropTypes.func,
+  openAddMovieModal: PropTypes.func,
   selectedMovie: PropTypes.shape({
     budget: PropTypes.number,
     genres: PropTypes.arrayOf(
@@ -72,6 +70,7 @@ Header.propTypes = {
     voteAverage: PropTypes.number,
     voteCount: PropTypes.number,
   }),
+  search: PropTypes.string,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header);
