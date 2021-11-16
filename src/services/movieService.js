@@ -7,7 +7,7 @@ import {
 
 const apiBase = "http://localhost:4000";
 
-const getMoviesAsync = async (genre, search, sortBy) => {
+const getMoviesAsync = async ({ genre, search, sortBy }) => {
   let url = `${apiBase}/movies/?limit=${30}`;
   if (genre && genre !== "All") {
     url += `&filter=${genre}`;

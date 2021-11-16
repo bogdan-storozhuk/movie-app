@@ -1,4 +1,6 @@
 import qs from "query-string";
+import { render } from "@testing-library/react";
+import { BrowserRouter } from "react-router-dom";
 
 const getFormatedGenresDescription = (genres) => {
   if (genres.length === 2) {
@@ -103,6 +105,12 @@ const modifyQueryParamInSearch = (search, name, value) => {
   return qs.stringify(newQueryParams);
 };
 
+const renderWithRouter = (ui, { route = "/" } = {}) => {
+  window.history.pushState({}, "Test page", route);
+
+  return render(ui, { wrapper: BrowserRouter });
+};
+
 export {
   getFormatedGenresDescription,
   getGenreList,
@@ -111,4 +119,5 @@ export {
   mapMovieFieldNameToBackEndFormat,
   mapMovieJsonToBackEndFormat,
   modifyQueryParamInSearch,
+  renderWithRouter,
 };

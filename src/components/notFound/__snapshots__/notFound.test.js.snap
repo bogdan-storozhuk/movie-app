@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`NotFound should match snapshot 1`] = `
+<DocumentFragment>
+  <h1
+    class="NotFound"
+  >
+    Not Found
+  </h1>
+</DocumentFragment>
+`;
