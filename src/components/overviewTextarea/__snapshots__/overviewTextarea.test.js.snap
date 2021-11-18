@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`OverviewTextarea should match snapshot with empty value 1`] = `
+<DocumentFragment>
+  <textarea
+    class="OverviewTextarea"
+    id="overview"
+    name="overview"
+    type="text"
+  />
+</DocumentFragment>
+`;
+
+exports[`OverviewTextarea should match snapshot with empty value 2`] = `
+<DocumentFragment>
+  <textarea
+    class="OverviewTextarea"
+    id="overview"
+    name="overview"
+    type="text"
+  >
+    test
+  </textarea>
+</DocumentFragment>
+`;

@@ -11,7 +11,11 @@ import {
 
 import "./movieListItemMenu.css";
 
-const MovieListItemMenu = ({ id, openEditMovieModal, openDeleteMovieModal }) => {
+const MovieListItemMenu = ({
+  id,
+  openEditMovieModal,
+  openDeleteMovieModal,
+}) => {
   const [show, setShow] = useState(true);
   const onToggleMenu = (e) => {
     e.stopPropagation();
@@ -28,7 +32,11 @@ const MovieListItemMenu = ({ id, openEditMovieModal, openDeleteMovieModal }) => 
 
   return (
     <div className="MovieListItemMenu">
-      <button className="MovieListItemMenu-Toggle" onClick={onToggleMenu}>
+      <button
+        className="MovieListItemMenu-Toggle"
+        onClick={onToggleMenu}
+        data-testid="movie-list-item-toggle"
+      >
         <ThreeDotsVertical />
       </button>
       <Toast onClose={onToggleMenu} show={!show}>

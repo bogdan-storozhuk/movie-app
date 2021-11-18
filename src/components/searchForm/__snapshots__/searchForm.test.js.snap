@@ -1,0 +1,61 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SearchForm should match snapshot with empty search value 1`] = `
+<DocumentFragment>
+  <div
+    class="Header-BottomPanel"
+  >
+    <h1
+      class="Title"
+    >
+      FIND YOUR MOVIE
+    </h1>
+    <div
+      class="search"
+    >
+      <input
+        class="searchTerm"
+        placeholder="What do you want to watch?"
+        type="text"
+        value=""
+      />
+      <a
+        class="searchButton"
+        href="/search/"
+      >
+        Search
+      </a>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`SearchForm should match snapshot with not empty search value 1`] = `
+<DocumentFragment>
+  <div
+    class="Header-BottomPanel"
+  >
+    <h1
+      class="Title"
+    >
+      FIND YOUR MOVIE
+    </h1>
+    <div
+      class="search"
+    >
+      <input
+        class="searchTerm"
+        placeholder="What do you want to watch?"
+        type="text"
+        value="search example"
+      />
+      <a
+        class="searchButton"
+        href="/search/search example"
+      >
+        Search
+      </a>
+    </div>
+  </div>
+</DocumentFragment>
+`;

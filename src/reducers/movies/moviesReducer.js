@@ -17,12 +17,7 @@ import {
   editMovieFailure,
 } from "./actions";
 import { searchOptionsSelector } from "./selectors";
-import {
-  getMoviesAsync,
-  postMovie,
-  deleteMovie,
-  editMovie,
-} from "../../services/movieService";
+import * as api from "../../services/movieService";
 
 const initialState = {
   search: "",
@@ -121,9 +116,8 @@ export default moviesReducer;
 
 export function* fetchMoviesAsync(action) {
   try {
-    const { genre, search, sortBy } = action.payload;
     yield put(fetchMoviesRequest());
-    const data = yield call(() => getMoviesAsync(genre, search, sortBy));
+    const data = yield call(api.getMoviesAsync, action.payload);
     yield put(fetchMoviesSuccess(data));
   } catch (error) {
     yield put(fetchMoviesFailure(error));
@@ -137,7 +131,7 @@ export function* watchFetchMovies() {
 export function* postMovieAsync(action) {
   try {
     yield put(postMovieRequest());
-    yield call(() => postMovie(action.payload));
+    yield call(api.postMovie, action.payload);
     yield put(postMovieSuccess());
     const searchOptions = yield select(searchOptionsSelector);
     yield call(fetchMoviesAsync, { payload: searchOptions });
@@ -153,7 +147,7 @@ export function* watchPostMovie() {
 export function* deleteMovieAsync(action) {
   try {
     yield put(deleteMovieRequest());
-    yield call(() => deleteMovie(action.payload));
+    yield call(api.deleteMovie, action.payload);
     yield put(deleteMovieSuccess());
     const searchOptions = yield select(searchOptionsSelector);
     yield call(fetchMoviesAsync, { payload: searchOptions });
@@ -169,7 +163,7 @@ export function* watchDeleteMovie() {
 export function* editMovieAsync(action) {
   try {
     yield put(editMovieRequest());
-    yield call(() => editMovie(action.payload));
+    yield call(api.editMovie, action.payload);
     yield put(editMovieSuccess());
     const searchOptions = yield select(searchOptionsSelector);
     yield call(fetchMoviesAsync, { payload: searchOptions });

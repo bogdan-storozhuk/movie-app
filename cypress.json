@@ -1,0 +1,6 @@
+{
+    "testFiles": "**/*.test.{js,ts,jsx,tsx}",
+    "componentFolder": "cypress/integration/",
+    "baseUrl": "http://localhost:8080",
+    "experimentalStudio": true
+  }
