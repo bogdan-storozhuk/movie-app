@@ -11,7 +11,7 @@ import { modifyQueryParamInSearch } from "../../utils";
 
 import "./dropdown.css";
 
-const DropDown = ({ sortBy }) => {
+export const DropDown = ({ sortBy }) => {
   const { search, pathname } = useLocation();
   const navigate = useNavigate();
 

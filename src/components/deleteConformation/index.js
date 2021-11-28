@@ -1,9 +1,6 @@
 import React from "react";
-import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import Button from "react-bootstrap/Button";
-
-import { deleteMovieStart } from "../../reducers/movies/actions";
 
 import "./deleteConformation.css";
 
@@ -25,15 +22,9 @@ const DeleteConformation = ({ id, deleteMovieStart }) => {
   );
 };
 
-function mapDispatchToProps(dispatch) {
-  return {
-    deleteMovieStart: (id) => dispatch(deleteMovieStart(id)),
-  };
-}
-
 DeleteConformation.propTypes = {
   id: PropTypes.number,
   deleteMovieStart: PropTypes.func,
 };
 
-export default connect(null, mapDispatchToProps)(DeleteConformation);
+export default DeleteConformation;

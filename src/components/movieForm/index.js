@@ -4,8 +4,6 @@ import Button from "react-bootstrap/Button";
 import { Formik } from "formik";
 import PropTypes from "prop-types";
 
-import { postMovieStart, editMovieStart } from "../../reducers/movies/actions";
-
 import { formFields } from "../../assets/constants";
 
 import MovieFormField from "../movieFormField";
@@ -116,13 +114,6 @@ const MovieForm = ({
   );
 };
 
-function mapDispatchToProps(dispatch) {
-  return {
-    postMovieStart: (movie) => dispatch(postMovieStart(movie)),
-    editMovieStart: (movie) => dispatch(editMovieStart(movie)),
-  };
-}
-
 MovieForm.propTypes = {
   closeMovieModal: PropTypes.func,
   postMovieStart: PropTypes.func,
@@ -145,4 +136,4 @@ MovieForm.propTypes = {
   }),
 };
 
-export default connect(null, mapDispatchToProps)(MovieForm);
+export default MovieForm;
