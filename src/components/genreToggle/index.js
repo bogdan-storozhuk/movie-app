@@ -11,8 +11,8 @@ import { genreSelector } from "../../reducers/movies/selectors";
 
 import "./genreToggle.css";
 
-const GenreToggle = ({ genre }) => {
-  const getSelectedGenre = (selectedGenre) =>
+export const GenreToggle = ({ selectedGenre }) => {
+  const highlightGenreIfSelected = (genre) =>
     selectedGenre === genre && "selectedGenre";
 
   return (
@@ -21,7 +21,7 @@ const GenreToggle = ({ genre }) => {
         <GenreItem
           key={genre.id}
           genre={genre}
-          getSelectedGenre={getSelectedGenre}
+          highlightGenreIfSelected={highlightGenreIfSelected}
         />
       ))}
     </ul>
@@ -29,11 +29,11 @@ const GenreToggle = ({ genre }) => {
 };
 
 GenreToggle.propTypes = {
-  genre: PropTypes.string,
+  selectedGenre: PropTypes.string,
 };
 
 const mapStateToProps = createStructuredSelector({
-  genre: genreSelector,
+  selectedGenre: genreSelector,
 });
 
 export default connect(mapStateToProps)(GenreToggle);

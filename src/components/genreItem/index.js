@@ -6,7 +6,7 @@ import { modifyQueryParamInSearch } from "../../utils";
 
 import "./genreItem.css";
 
-const GenreItem = ({ genre, getSelectedGenre }) => {
+const GenreItem = ({ genre, highlightGenreIfSelected }) => {
   const { search, pathname } = useLocation();
   const navigate = useNavigate();
   const setGenre = (name) => {
@@ -18,7 +18,9 @@ const GenreItem = ({ genre, getSelectedGenre }) => {
   };
   return (
     <li onClick={() => setGenre(genre.name)} className="genreItem">
-      <span className={`genreItemMessage ${getSelectedGenre(genre.name)}`}>
+      <span
+        className={`genreItemMessage ${highlightGenreIfSelected(genre.name)}`}
+      >
         {genre.name}
       </span>
     </li>
@@ -30,7 +32,7 @@ GenreItem.propTypes = {
     id: PropTypes.number,
     name: PropTypes.string,
   }),
-  getSelectedGenre: PropTypes.func,
+  highlightGenreIfSelected: PropTypes.func,
 };
 
 export default GenreItem;

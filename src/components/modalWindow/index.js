@@ -12,6 +12,12 @@ import { ModalTypes } from "../../assets/constants";
 
 import { closeMovieModal } from "../../reducers/modals/actions";
 import {
+  postMovieStart,
+  editMovieStart,
+  deleteMovieStart,
+} from "../../reducers/movies/actions";
+
+import {
   showModalSelector,
   modalTypeSelector,
 } from "../../reducers/modals/selectors";
@@ -19,7 +25,15 @@ import { selectedMovieSelector } from "../../reducers/movies/selectors";
 
 import "./modalWindow.css";
 
-const ModalWindow = ({ closeMovieModal, show, modalType, selectedMovie }) => {
+export const ModalWindow = ({
+  closeMovieModal,
+  postMovieStart,
+  editMovieStart,
+  deleteMovieStart,
+  show,
+  modalType,
+  selectedMovie,
+}) => {
   let titleMessage;
   if (modalType === ModalTypes.NEW) {
     titleMessage = "ADD MOVIE";
@@ -42,10 +56,15 @@ const ModalWindow = ({ closeMovieModal, show, modalType, selectedMovie }) => {
       </Modal.Header>
       <Modal.Body className="ModalWindow-Body">
         {modalType === ModalTypes.DELETE ? (
-          <DeleteConformation id={selectedMovie.id} />
+          <DeleteConformation
+            deleteMovieStart={deleteMovieStart}
+            id={selectedMovie.id}
+          />
         ) : (
           <MovieForm
             closeMovieModal={closeMovieModal}
+            postMovieStart={postMovieStart}
+            editMovieStart={editMovieStart}
             selectedMovie={selectedMovie}
           />
         )}
@@ -63,13 +82,18 @@ const mapStateToProps = createStructuredSelector({
 function mapDispatchToProps(dispatch) {
   return {
     closeMovieModal: () => dispatch(closeMovieModal()),
+    postMovieStart: (movie) => dispatch(postMovieStart(movie)),
+    editMovieStart: (movie) => dispatch(editMovieStart(movie)),
+    deleteMovieStart: (id) => dispatch(deleteMovieStart(id)),
   };
 }
 
 ModalWindow.propTypes = {
   closeMovieModal: PropTypes.func,
+  postMovieStart: PropTypes.func,
+  editMovieStart: PropTypes.func,
   show: PropTypes.bool,
-  modalType: PropTypes.string,
+  modalType: PropTypes.oneOf(["NEW", "EDIT", "DELETE"]),
   selectedMovie: PropTypes.shape({
     budget: PropTypes.number,
     genres: PropTypes.arrayOf(
